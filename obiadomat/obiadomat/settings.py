@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "users",
+    "crispy_forms",
+    "crispy_tailwind",
 ]
 
 MIDDLEWARE = [
@@ -140,3 +142,7 @@ AUTH_USER_MODEL = "users.CustomUser"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 
 CRISPY_TEMPLATE_PACK = "tailwind"
+
+LOGOUT_REDIRECT_URL = "users:login"
+LOGIN_REDIRECT_URL = "lunch_sessions:lunch_session_list"
+LOGIN_URL = "users:login"
