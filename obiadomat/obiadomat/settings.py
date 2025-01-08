@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "users",
+    "crispy_forms",
+    "crispy_tailwind",
 ]
 
 MIDDLEWARE = [
@@ -134,3 +137,22 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+AUTH_USER_MODEL = "users.CustomUser"
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+
+CRISPY_TEMPLATE_PACK = "tailwind"
+
+LOGOUT_REDIRECT_URL = "users:login"
+LOGIN_REDIRECT_URL = "lunch_sessions:lunch_session_list"
+LOGIN_URL = "users:login"
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv("PGADMIN_DEFAULT_EMAIL")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
+DEFAULT_FROM_EMAIL = "obiadomat@obiadomat.com"  # does not work - gmail restrictions
+HOST = os.getenv("HOST", default="http://localhost:8000/")
