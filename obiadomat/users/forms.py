@@ -12,3 +12,8 @@ class RegisterForm(UserCreationForm):
             "first_name": forms.TextInput(attrs={"placeholder": "Enter first name"}),
             "last_name": forms.TextInput(attrs={"placeholder": "Enter last name"}),
         }
+
+class CustomUserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = ("email", "first_name", "last_name")
