@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load tailwind_filters %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white shadow rounded p-6">
+
+    <h1 class="text-2xl font-bold mb-6">Session Report: {{ session.name }}</h1>
+
+    <section class="mb-8">
+        <h2 class="text-xl font-semibold mb-4">Session Details</h2>
+        <p><strong>Session Name:</strong> {{ session.name }}</p>
+        <p><strong>Edit Time:</strong> {{ session.edit_time|date:"F j, Y, g:i a" }}</p>
+        <p><strong>Delivery Time:</strong> {{ session.delivery_time|date:"F j, Y, g:i a" }}</p>
+        <p><strong>Restaurant Name:</strong> {{ restaurant.name }}</p>
+        <p><strong>Restaurant Phone:</strong> {{ restaurant.phone_number }}</p>
+    </section>
+
+    <hr class="my-8">
+
+    <section class="mb-8">
+        <h2 class="text-xl font-semibold mb-2">Users Orders</h2>
+        {% for order_data in orders_with_costs %}
+            <div class="pt-4">
+                <h3 class="font-medium">User: {{ order_data.order.orderer }}</h3>
+                <ul class="list-disc pl-5">
+                    {% for order_item in order_data.order.order_items.all %}
+                        <li>
+                            {{ order_item.portion }} x <strong>{{ order_item.meal.name }}</strong>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% if order_data.order.notes %}
+                    <p class="italic text-sm">Notes: {{ order_data.order.notes }}</p>
+                {% endif %}
+                <p><strong>Total Order Cost:</strong> {{ order_data.total_cost }}zł</p>
+            </div>
+        {% empty %}
+            <p>No orders have been placed in this session.</p>
+        {% endfor %}
+    </section>
+
+    <hr class="my-8">
+
+    <section class="mb-8">
+        <h2 class="text-xl font-semibold mb-4">Aggregated Meals</h2>
+        <table class="w-full text-left">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4">Meal</th>
+                    <th class="py-2 px-4">Total Portion(s)</th>
+                    <th class="py-2 px-4">Total Meal Cost (zł)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for meal_name, meal_data in aggregated_meals.items %}
+                    <tr>
+                        <td class="py-2 px-4">{{ meal_name }}</td>
+                        <td class="py-2 px-4">{{ meal_data.portion }}</td>
+                        <td class="py-2 px-4">{{ meal_data.total_meal_cost }}zł</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <hr class="my-8">
+
+    <section class="mb-8">
+        <h2 class="text-xl font-semibold">
+            Total Value: {{ total_value }}zł
+        </h2>
+    </section>
+
+</div>
+{% endblock %}

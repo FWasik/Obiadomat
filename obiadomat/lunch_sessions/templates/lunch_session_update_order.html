@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load tailwind_filters %}
+
+{% block content %}
+    <div class="max-w-4xl mx-auto bg-white shadow rounded p-6">
+        <h2 class="text-xl font-semibold mb-4">Update an Order</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ order_form|crispy }}
+            {{ order_item_formset.management_form|crispy }}
+            {% for form in order_item_formset %}
+                <div class="mb-4">{{ form|crispy }}</div>
+            {% endfor %}
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Save Order
+            </button>
+        </form>
+    </div>
+{% endblock %}

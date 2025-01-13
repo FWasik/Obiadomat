@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load tailwind_filters %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto mt-8 p-4 bg-white shadow rounded">
+    <h1 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">
+        Orders for {{ session.name }}
+    </h1>
+
+    {% if orders %}
+        <div class="space-y-4">
+            {% for order in orders %}
+                <div class="p-4 bg-gray-100 rounded-lg shadow-sm">
+                    <p class="text-lg font-medium text-gray-700 mb-2">
+                        <strong>User:</strong> {{ order.orderer }}
+                    </p>
+
+                    <div class="flex gap-5">
+                        <a href="{% url 'lunch_sessions:order_update' session_id=session.id order_id=order.id %}" 
+                            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                            Update
+                        </a>
+
+                        <form method="post" action="{% url 'lunch_sessions:order_delete' session_id=session.id order_id=order.id %}" class="mb-0">
+                            {% csrf_token %}
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                                Cancel Order
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-gray-500 text-center mt-4">
+            No orders available.
+        </p>
+    {% endif %}
+</div>
+{% endblock %}
