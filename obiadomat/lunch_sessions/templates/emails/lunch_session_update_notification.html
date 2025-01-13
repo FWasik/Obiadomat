@@ -1,0 +1,17 @@
+<body>
+    <p>Hello,</p>
+    <p>The lunch session "{{ old_name|default:session.name }}" has been updated by {{ session.creator }}.</p>
+    
+    <p><strong>Changes:</strong></p>
+    <ul>
+        {% for field, new_value in changes.items %}
+            <li>
+                <strong>{{ field|capfirst }}:</strong> "{{ new_value }}"
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{{ session_url }}">Click here to view the session details</a></p>
+    <p>Sincerely, </p>
+    <p>Obiadomat Team</p>
+</body>

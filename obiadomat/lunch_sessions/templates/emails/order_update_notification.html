@@ -1,0 +1,36 @@
+<body>
+    <p>Hello,</p>
+    <p>The order in a lunch session "{{ session.name }}" has been updated by {{ session.creator }}.</p>
+    
+    {% if form_changes %}
+        <p><strong>Changes in Order:</strong></p>
+        <ul>
+            {% for field, new_value in form_changes.items %}
+                <li>{{ field|capfirst }}: {{ new_value }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if formset_items %}
+        <p><strong>Update Order Items:</strong></p>
+        <ul>
+            {% for item in formset_items %}
+                <li>{{ item.meal.name }} x {{ item.portion }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if deleted_items %}
+        <p><strong>Deleted Order Items:</strong></p>
+        <ul>
+            {% for item in deleted_items %}
+                <li>{{ item.meal.name }} x {{ item.portion }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <p><a href="{{ session_url }}">Click here to view the session details</a></p>
+
+    <p>Sincerely, </p>
+    <p>Obiadomat Team</p>
+</body>

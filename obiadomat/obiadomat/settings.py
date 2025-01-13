@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "users",
     "restaurants",
+    "lunch_sessions",
     "crispy_forms",
     "crispy_tailwind",
 ]
